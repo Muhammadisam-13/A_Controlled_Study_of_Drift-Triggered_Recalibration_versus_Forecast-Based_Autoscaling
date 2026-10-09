@@ -1,0 +1,177 @@
+regime,metric,contrast,detector,mean_diff,ci_lo,ci_hi,wilcoxon_p
+cap_stationary,slo_violation_rate,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,recal effect | reactive (RR-RF),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,recal effect | reactive (RR-RF),cusum,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,recal effect | proactive (PR-PF),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,recal effect | proactive (PR-PF),cusum,0.0006,0.0,0.0017,0.3173
+cap_stationary,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,gap to oracle | reactive (RR-RO),cusum,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,slo_violation_rate,gap to oracle | proactive (PR-PO),cusum,0.0006,0.0,0.0017,0.3173
+cap_stationary,slo_violation_rate,RR vs model-free step rule (RR-S),adwin002,0.0344,0.025,0.0456,0.0
+cap_stationary,slo_violation_rate,RR vs model-free step rule (RR-S),adwin02,0.0344,0.0244,0.0456,0.0
+cap_stationary,slo_violation_rate,RR vs model-free step rule (RR-S),cusum,0.0344,0.025,0.045,0.0
+cap_stationary,slo_violation_rate,PR vs model-free step rule (PR-S),adwin002,-0.0039,-0.0106,0.0017,0.3227
+cap_stationary,slo_violation_rate,PR vs model-free step rule (PR-S),adwin02,-0.0039,-0.0106,0.0011,0.3227
+cap_stationary,slo_violation_rate,PR vs model-free step rule (PR-S),cusum,-0.0033,-0.0106,0.0028,0.5264
+cap_stationary,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin002,-0.0383,-0.0494,-0.0278,0.0
+cap_stationary,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin02,-0.0383,-0.0494,-0.0278,0.0
+cap_stationary,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",cusum,-0.0378,-0.0483,-0.0272,0.0
+cap_stationary,slo_violation_rate,fixed proactive vs step rule (PF-S),-,-0.0039,-0.0106,0.0017,0.3227
+cap_stationary,cost,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,cost,recal effect | reactive (RR-RF),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,cost,recal effect | reactive (RR-RF),cusum,0.1333,0.0,0.4,0.3173
+cap_stationary,cost,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,cost,recal effect | proactive (PR-PF),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,cost,recal effect | proactive (PR-PF),cusum,0.9667,0.0,2.9,0.3173
+cap_stationary,cost,gap to oracle | reactive (RR-RO),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,cost,gap to oracle | reactive (RR-RO),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,cost,gap to oracle | reactive (RR-RO),cusum,0.1333,0.0,0.4,0.3173
+cap_stationary,cost,gap to oracle | proactive (PR-PO),adwin002,0.0,0.0,0.0,1.0
+cap_stationary,cost,gap to oracle | proactive (PR-PO),adwin02,0.0,0.0,0.0,1.0
+cap_stationary,cost,gap to oracle | proactive (PR-PO),cusum,0.9667,0.0,2.9,0.3173
+cap_stationary,cost,RR vs model-free step rule (RR-S),adwin002,-58.8,-66.3333,-51.1,0.0
+cap_stationary,cost,RR vs model-free step rule (RR-S),adwin02,-58.8,-66.0667,-51.7308,0.0
+cap_stationary,cost,RR vs model-free step rule (RR-S),cusum,-58.6667,-65.9342,-51.3658,0.0
+cap_stationary,cost,PR vs model-free step rule (PR-S),adwin002,-1.9667,-9.6,5.3008,0.6184
+cap_stationary,cost,PR vs model-free step rule (PR-S),adwin02,-1.9667,-9.4,5.7342,0.6184
+cap_stationary,cost,PR vs model-free step rule (PR-S),cusum,-1.0,-8.2025,6.2675,0.7163
+cap_stationary,cost,"proactive vs reactive, recal (PR-RR)",adwin002,56.8333,55.7992,57.8,0.0
+cap_stationary,cost,"proactive vs reactive, recal (PR-RR)",adwin02,56.8333,55.7667,57.8333,0.0
+cap_stationary,cost,"proactive vs reactive, recal (PR-RR)",cusum,57.6667,56.0667,59.6342,0.0
+cap_stationary,cost,fixed proactive vs step rule (PF-S),-,-1.9667,-9.5008,5.535,0.6184
+cap_sudden,slo_violation_rate,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_sudden,slo_violation_rate,recal effect | reactive (RR-RF),adwin02,-0.0194,-0.0361,-0.0067,0.0178
+cap_sudden,slo_violation_rate,recal effect | reactive (RR-RF),cusum,-0.1433,-0.1639,-0.1211,0.0
+cap_sudden,slo_violation_rate,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_sudden,slo_violation_rate,recal effect | proactive (PR-PF),adwin02,-0.0111,-0.0217,-0.0033,0.0178
+cap_sudden,slo_violation_rate,recal effect | proactive (PR-PF),cusum,-0.095,-0.1089,-0.0811,0.0
+cap_sudden,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin002,0.1967,0.1778,0.2161,0.0
+cap_sudden,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin02,0.1772,0.1611,0.195,0.0
+cap_sudden,slo_violation_rate,gap to oracle | reactive (RR-RO),cusum,0.0533,0.0439,0.0628,0.0
+cap_sudden,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin002,0.1328,0.1178,0.1467,0.0
+cap_sudden,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin02,0.1217,0.1089,0.135,0.0
+cap_sudden,slo_violation_rate,gap to oracle | proactive (PR-PO),cusum,0.0378,0.0306,0.0461,0.0
+cap_sudden,slo_violation_rate,RR vs model-free step rule (RR-S),adwin002,0.1822,0.1589,0.205,0.0
+cap_sudden,slo_violation_rate,RR vs model-free step rule (RR-S),adwin02,0.1628,0.14,0.1856,0.0
+cap_sudden,slo_violation_rate,RR vs model-free step rule (RR-S),cusum,0.0389,0.0244,0.0522,0.0001
+cap_sudden,slo_violation_rate,PR vs model-free step rule (PR-S),adwin002,0.0894,0.0744,0.1033,0.0
+cap_sudden,slo_violation_rate,PR vs model-free step rule (PR-S),adwin02,0.0783,0.0644,0.0928,0.0
+cap_sudden,slo_violation_rate,PR vs model-free step rule (PR-S),cusum,-0.0056,-0.0156,0.0039,0.2954
+cap_sudden,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin002,-0.0928,-0.1083,-0.0794,0.0
+cap_sudden,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin02,-0.0844,-0.0989,-0.0717,0.0
+cap_sudden,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",cusum,-0.0444,-0.0539,-0.0356,0.0
+cap_sudden,slo_violation_rate,fixed proactive vs step rule (PF-S),-,0.0894,0.075,0.1044,0.0
+cap_sudden,cost,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_sudden,cost,recal effect | reactive (RR-RF),adwin02,18.6667,6.6667,32.5,0.0117
+cap_sudden,cost,recal effect | reactive (RR-RF),cusum,119.1333,107.0992,130.2683,0.0
+cap_sudden,cost,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_sudden,cost,recal effect | proactive (PR-PF),adwin02,14.4,4.93,25.3367,0.0117
+cap_sudden,cost,recal effect | proactive (PR-PF),cusum,113.5,105.1667,120.4667,0.0
+cap_sudden,cost,gap to oracle | reactive (RR-RO),adwin002,-158.5333,-159.4675,-157.6667,0.0
+cap_sudden,cost,gap to oracle | reactive (RR-RO),adwin02,-139.8667,-152.2358,-126.0,0.0
+cap_sudden,cost,gap to oracle | reactive (RR-RO),cusum,-39.4,-51.1683,-27.3992,0.0
+cap_sudden,cost,gap to oracle | proactive (PR-PO),adwin002,-155.7333,-155.9,-155.5,0.0
+cap_sudden,cost,gap to oracle | proactive (PR-PO),adwin02,-141.3333,-150.4017,-130.3983,0.0
+cap_sudden,cost,gap to oracle | proactive (PR-PO),cusum,-42.2333,-50.2008,-35.1658,0.0
+cap_sudden,cost,RR vs model-free step rule (RR-S),adwin002,-140.1,-150.2342,-131.165,0.0
+cap_sudden,cost,RR vs model-free step rule (RR-S),adwin02,-121.4333,-137.4675,-103.8,0.0
+cap_sudden,cost,RR vs model-free step rule (RR-S),cusum,-20.9667,-32.5,-10.3992,0.0024
+cap_sudden,cost,PR vs model-free step rule (PR-S),adwin002,-83.2667,-93.2683,-73.365,0.0
+cap_sudden,cost,PR vs model-free step rule (PR-S),adwin02,-68.8667,-83.4358,-54.6992,0.0
+cap_sudden,cost,PR vs model-free step rule (PR-S),cusum,30.2333,20.0,40.3692,0.0001
+cap_sudden,cost,"proactive vs reactive, recal (PR-RR)",adwin002,56.8333,55.8658,57.8,0.0
+cap_sudden,cost,"proactive vs reactive, recal (PR-RR)",adwin02,52.5667,48.9,55.7333,0.0
+cap_sudden,cost,"proactive vs reactive, recal (PR-RR)",cusum,51.2,44.6658,57.7333,0.0
+cap_sudden,cost,fixed proactive vs step rule (PF-S),-,-83.2667,-93.3675,-73.4658,0.0
+cap_gradual,slo_violation_rate,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_gradual,slo_violation_rate,recal effect | reactive (RR-RF),adwin02,-0.0067,-0.0128,-0.0022,0.0171
+cap_gradual,slo_violation_rate,recal effect | reactive (RR-RF),cusum,-0.085,-0.1,-0.0689,0.0
+cap_gradual,slo_violation_rate,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_gradual,slo_violation_rate,recal effect | proactive (PR-PF),adwin02,-0.0039,-0.0083,-0.0006,0.0656
+cap_gradual,slo_violation_rate,recal effect | proactive (PR-PF),cusum,-0.0661,-0.0772,-0.0539,0.0
+cap_gradual,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin002,0.15,0.1344,0.165,0.0
+cap_gradual,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin02,0.1433,0.1278,0.1578,0.0
+cap_gradual,slo_violation_rate,gap to oracle | reactive (RR-RO),cusum,0.065,0.0517,0.08,0.0
+cap_gradual,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin002,0.1106,0.0967,0.1256,0.0
+cap_gradual,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin02,0.1067,0.0922,0.1211,0.0
+cap_gradual,slo_violation_rate,gap to oracle | proactive (PR-PO),cusum,0.0444,0.0356,0.0539,0.0
+cap_gradual,slo_violation_rate,RR vs model-free step rule (RR-S),adwin002,0.1361,0.1194,0.1539,0.0
+cap_gradual,slo_violation_rate,RR vs model-free step rule (RR-S),adwin02,0.1294,0.1122,0.1483,0.0
+cap_gradual,slo_violation_rate,RR vs model-free step rule (RR-S),cusum,0.0511,0.0372,0.065,0.0
+cap_gradual,slo_violation_rate,PR vs model-free step rule (PR-S),adwin002,0.0611,0.0489,0.0744,0.0
+cap_gradual,slo_violation_rate,PR vs model-free step rule (PR-S),adwin02,0.0572,0.0456,0.0694,0.0
+cap_gradual,slo_violation_rate,PR vs model-free step rule (PR-S),cusum,-0.005,-0.0139,0.0033,0.4627
+cap_gradual,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin002,-0.075,-0.0861,-0.0639,0.0
+cap_gradual,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin02,-0.0722,-0.0828,-0.0617,0.0
+cap_gradual,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",cusum,-0.0561,-0.0656,-0.0461,0.0
+cap_gradual,slo_violation_rate,fixed proactive vs step rule (PF-S),-,0.0611,0.0494,0.0739,0.0
+cap_gradual,cost,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_gradual,cost,recal effect | reactive (RR-RF),adwin02,4.8,1.0667,9.1333,0.018
+cap_gradual,cost,recal effect | reactive (RR-RF),cusum,62.1,52.965,71.2025,0.0
+cap_gradual,cost,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_gradual,cost,recal effect | proactive (PR-PF),adwin02,3.7333,0.6667,7.3333,0.0431
+cap_gradual,cost,recal effect | proactive (PR-PF),cusum,62.7333,53.5325,71.635,0.0
+cap_gradual,cost,gap to oracle | reactive (RR-RO),adwin002,-110.7,-111.7,-109.6667,0.0
+cap_gradual,cost,gap to oracle | reactive (RR-RO),adwin02,-105.9,-109.4667,-101.165,0.0
+cap_gradual,cost,gap to oracle | reactive (RR-RO),cusum,-48.6,-57.9333,-39.7325,0.0
+cap_gradual,cost,gap to oracle | proactive (PR-PO),adwin002,-123.0333,-123.7333,-122.3333,0.0
+cap_gradual,cost,gap to oracle | proactive (PR-PO),adwin02,-119.3,-122.2675,-115.6667,0.0
+cap_gradual,cost,gap to oracle | proactive (PR-PO),cusum,-60.3,-69.0692,-51.6642,0.0
+cap_gradual,cost,RR vs model-free step rule (RR-S),adwin002,-105.3667,-116.7675,-93.9983,0.0
+cap_gradual,cost,RR vs model-free step rule (RR-S),adwin02,-100.5667,-112.6342,-88.065,0.0
+cap_gradual,cost,RR vs model-free step rule (RR-S),cusum,-43.2667,-54.9333,-31.4992,0.0
+cap_gradual,cost,PR vs model-free step rule (PR-S),adwin002,-48.5333,-60.0008,-36.3317,0.0
+cap_gradual,cost,PR vs model-free step rule (PR-S),adwin02,-44.8,-57.0,-33.0992,0.0
+cap_gradual,cost,PR vs model-free step rule (PR-S),cusum,14.2,2.3992,26.1392,0.0359
+cap_gradual,cost,"proactive vs reactive, recal (PR-RR)",adwin002,56.8333,55.7333,57.8333,0.0
+cap_gradual,cost,"proactive vs reactive, recal (PR-RR)",adwin02,55.7667,54.4333,57.0333,0.0
+cap_gradual,cost,"proactive vs reactive, recal (PR-RR)",cusum,57.4667,54.2992,60.3667,0.0
+cap_gradual,cost,fixed proactive vs step rule (PF-S),-,-48.5333,-59.6333,-37.9992,0.0
+cap_recurring,slo_violation_rate,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_recurring,slo_violation_rate,recal effect | reactive (RR-RF),adwin02,0.0,0.0,0.0,1.0
+cap_recurring,slo_violation_rate,recal effect | reactive (RR-RF),cusum,-0.0711,-0.0889,-0.055,0.0
+cap_recurring,slo_violation_rate,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_recurring,slo_violation_rate,recal effect | proactive (PR-PF),adwin02,0.0,0.0,0.0,1.0
+cap_recurring,slo_violation_rate,recal effect | proactive (PR-PF),cusum,-0.055,-0.0694,-0.0394,0.0
+cap_recurring,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin002,0.1339,0.1172,0.15,0.0
+cap_recurring,slo_violation_rate,gap to oracle | reactive (RR-RO),adwin02,0.1339,0.1172,0.1506,0.0
+cap_recurring,slo_violation_rate,gap to oracle | reactive (RR-RO),cusum,0.0628,0.0489,0.0778,0.0
+cap_recurring,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin002,0.0939,0.0822,0.1067,0.0
+cap_recurring,slo_violation_rate,gap to oracle | proactive (PR-PO),adwin02,0.0939,0.0822,0.1061,0.0
+cap_recurring,slo_violation_rate,gap to oracle | proactive (PR-PO),cusum,0.0389,0.0256,0.0517,0.0001
+cap_recurring,slo_violation_rate,RR vs model-free step rule (RR-S),adwin002,0.1178,0.1022,0.1333,0.0
+cap_recurring,slo_violation_rate,RR vs model-free step rule (RR-S),adwin02,0.1178,0.1022,0.1333,0.0
+cap_recurring,slo_violation_rate,RR vs model-free step rule (RR-S),cusum,0.0467,0.0356,0.0578,0.0
+cap_recurring,slo_violation_rate,PR vs model-free step rule (PR-S),adwin002,0.0506,0.0378,0.0639,0.0
+cap_recurring,slo_violation_rate,PR vs model-free step rule (PR-S),adwin02,0.0506,0.0378,0.0633,0.0
+cap_recurring,slo_violation_rate,PR vs model-free step rule (PR-S),cusum,-0.0044,-0.0144,0.0045,0.7928
+cap_recurring,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin002,-0.0672,-0.0772,-0.0572,0.0
+cap_recurring,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",adwin02,-0.0672,-0.0772,-0.0578,0.0
+cap_recurring,slo_violation_rate,"proactive vs reactive, recal (PR-RR)",cusum,-0.0511,-0.0594,-0.0433,0.0
+cap_recurring,slo_violation_rate,fixed proactive vs step rule (PF-S),-,0.0506,0.0378,0.0633,0.0
+cap_recurring,cost,recal effect | reactive (RR-RF),adwin002,0.0,0.0,0.0,1.0
+cap_recurring,cost,recal effect | reactive (RR-RF),adwin02,0.0,0.0,0.0,1.0
+cap_recurring,cost,recal effect | reactive (RR-RF),cusum,92.2667,78.4975,105.1367,0.0
+cap_recurring,cost,recal effect | proactive (PR-PF),adwin002,0.0,0.0,0.0,1.0
+cap_recurring,cost,recal effect | proactive (PR-PF),adwin02,0.0,0.0,0.0,1.0
+cap_recurring,cost,recal effect | proactive (PR-PF),cusum,93.7,81.1625,105.7033,0.0
+cap_recurring,cost,gap to oracle | reactive (RR-RO),adwin002,-120.6667,-122.3667,-119.1,0.0
+cap_recurring,cost,gap to oracle | reactive (RR-RO),adwin02,-120.6667,-122.3333,-119.0992,0.0
+cap_recurring,cost,gap to oracle | reactive (RR-RO),cusum,-28.4,-42.2008,-16.0333,0.0004
+cap_recurring,cost,gap to oracle | proactive (PR-PO),adwin002,-115.6333,-115.9,-115.3,0.0
+cap_recurring,cost,gap to oracle | proactive (PR-PO),adwin02,-115.6333,-115.9,-115.3,0.0
+cap_recurring,cost,gap to oracle | proactive (PR-PO),cusum,-21.9333,-34.2367,-9.6667,0.0024
+cap_recurring,cost,RR vs model-free step rule (RR-S),adwin002,-115.9667,-126.2692,-104.9658,0.0
+cap_recurring,cost,RR vs model-free step rule (RR-S),adwin02,-115.9667,-125.9008,-105.4992,0.0
+cap_recurring,cost,RR vs model-free step rule (RR-S),cusum,-23.7,-34.6,-13.0658,0.0007
+cap_recurring,cost,PR vs model-free step rule (PR-S),adwin002,-59.1333,-69.7675,-48.7308,0.0
+cap_recurring,cost,PR vs model-free step rule (PR-S),adwin02,-59.1333,-69.1008,-48.53,0.0
+cap_recurring,cost,PR vs model-free step rule (PR-S),cusum,34.5667,25.3325,44.3333,0.0
+cap_recurring,cost,"proactive vs reactive, recal (PR-RR)",adwin002,56.8333,55.6667,57.8333,0.0
+cap_recurring,cost,"proactive vs reactive, recal (PR-RR)",adwin02,56.8333,55.7667,57.8333,0.0
+cap_recurring,cost,"proactive vs reactive, recal (PR-RR)",cusum,58.2667,52.1992,64.9675,0.0
+cap_recurring,cost,fixed proactive vs step rule (PF-S),-,-59.1333,-69.6008,-48.3333,0.0

@@ -1,0 +1,13 @@
+regime,detector,detect_rate,median_lag,false_alarms_per_episode
+cap_gradual,adwin002,0.0,,0.0
+cap_gradual,adwin02,0.3,41.0,0.0
+cap_gradual,cusum,0.967,25.0,0.0
+cap_recurring,adwin002,0.0,,0.0
+cap_recurring,adwin02,0.0,,0.0
+cap_recurring,cusum,1.0,7.0,0.0
+cap_stationary,adwin002,0.0,,0.0
+cap_stationary,adwin02,0.0,,0.0
+cap_stationary,cusum,0.0,,0.067
+cap_sudden,adwin002,0.0,,0.0
+cap_sudden,adwin02,0.267,21.0,0.0
+cap_sudden,cusum,1.0,8.0,0.0

@@ -1,0 +1,11 @@
+regime,arm,cost,viol,adapt
+stationary,A,418.3,0.064,0.0
+stationary,D,418.3,0.064,0.0
+sudden,A,332.467,0.127,0.0
+sudden,D,332.733,0.127,1.0
+gradual,A,351.7,0.11,0.0
+gradual,D,351.5,0.11,1.9
+recurring,A,337.767,0.193,0.0
+recurring,D,337.8,0.194,1.767
+cyclic,A,416.533,0.188,0.0
+cyclic,D,416.533,0.188,0.0
