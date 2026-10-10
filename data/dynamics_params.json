@@ -1,11 +1,11 @@
 {
   "alpha": 0.5000000000000001,
   "base_latency_ms": 200.0000000000002,
-  "slope_ms": 7176.462791888688,
-  "k": 1.0920499139861977,
-  "capacity_per_replica": 38.92336266743774,
-  "r_squared": 0.8870273926931712,
-  "log_residual_std": 0.5067094893283068,
+  "slope_ms": 7176.983880864221,
+  "k": 1.0920499110975872,
+  "capacity_per_replica": 38.92594385371366,
+  "r_squared": 0.8870273926942025,
+  "log_residual_std": 0.5067094817829537,
   "fixed_replicas_in_real_data": 3,
   "n_points": 114
 }

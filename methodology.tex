@@ -1,0 +1,74 @@
+% Phase 2 methodology section. Drop into main.tex in place of (or after) the proposal Methodology.
+% Needs: \usepackage{graphicx,booktabs,amsmath}; upload figures/capacity_violation.png and
+% figures/capacity_belief.png next to main.tex. Add to the bibliography:
+% Also add bibitems for zanussi2026, tran2026, aboelazm2026, grohmann (venue to be confirmed on Scholar).
+% \bibitem{page1954} E.~S. Page, ``Continuous inspection schemes,'' \emph{Biometrika}, vol.~41, no.~1/2, pp.~100--115, 1954.
+
+\section{Methodology}
+
+\subsection{Overview}
+The study has two parts. Part~1 reproduces the experimental setting of the baseline paper, KIS-S \cite{zhang2025kiss}, and runs the $2\times2$ factorial design (reactive vs.\ proactive $\times$ static vs.\ drift-triggered) under shifts in offered load. Part~2, our proposed methodology, targets the gap that Part~1 exposes: when only the load level drifts, recalibration has little to correct, whereas a change in per-replica \emph{capacity} invalidates the model a controller plans with. Part~2 adds a residual-based capacity recalibration method and evaluates it against fixed and oracle baselines.
+
+\subsection{Baseline: KIS-S}
+KIS-S \cite{zhang2025kiss} couples a Kubernetes inference simulator (KISim) with a PPO-based autoscaler (KIScaler) that is trained in simulation and deployed without retraining. We use the released KISim repository as the source of real measurements: Locust load tests under four patterns (ramp, spike, periodic, random), each recorded at a fixed 3 replicas, giving $n=114$ pooled observations of concurrent users and P95 latency. We did not reproduce PPO training, which requires a GPU cluster and is outside the clarified scope. We also found that KISim's offline environment cannot compare controllers as released: the replica count is hard-coded to $(3,3)$ and latency is sampled from fixed per-pattern distributions, so scaling actions have no effect on the simulated outcome. We therefore calibrated our own environment on KIS-S's real data and mapped its load shapes to drift regimes (spike $\rightarrow$ sudden, ramp $\rightarrow$ gradual, periodic $\rightarrow$ cyclic).
+
+\subsection{Calibrated Environment}
+Latency is modelled in closed-loop saturation form,
+\begin{equation}
+L_t = L_0 + s\,\rho_t^{\,k}, \qquad \rho_t = \frac{\mathrm{EMA}_{\alpha}(u_t)}{r_t \, c},
+\end{equation}
+where $u_t$ is concurrent users, $r_t$ the effective replica count, $c$ the capacity per replica, and $\mathrm{EMA}_\alpha$ an exponential moving average that captures transient lag. Fitting by nonlinear least squares on the pooled real data gives $\alpha=0.5$, $L_0=200$\,ms, $s\approx7177$\,ms, $k\approx1.09$ and $c\approx38.9$ users per replica ($R^2=0.887$; an M/M/1 form reached 0.72). Observed latency is $L_t$ multiplied by log-normal noise with standard deviation 0.507, the residual spread of the fit. Because all real runs used 3 replicas, the dependence of latency on $r_t$ is an extrapolation from queueing theory, not an observed relationship; we state this as a limitation.
+
+Episodes last 60 steps. A scaling decision takes effect after a 2-step pod startup delay, with $1\le r_t\le10$ replicas. The service-level objective (SLO) is P95 latency $\le3000$\,ms. Each controller provisions so that predicted latency is at most 50\% of the SLO.
+
+\subsection{Part 1: Load-Drift Regimes and Controllers}
+\textbf{Regimes.} Offered load is 15 users (low) and 90 users (high), with Gaussian jitter of 2 users. The regimes are: stationary (constant 52 users, control); sudden (15 to 90 at $t=30$); gradual (linear ramp from $t=18$ to $t=42$); recurring (square wave, half-period 15 steps); and cyclic (smooth sinusoid, supplementary).
+
+\textbf{Arms.} A: reactive, static, a $\pm1$-replica rule on 3-step smoothed latency (scale up above $0.8\times$SLO, down below $0.25\times$SLO, 2-step cooldown), anchored once on the first 10 steps. B: proactive, static, a Holt (additive-trend) forecaster with $\alpha\in\{0.1,\dots,0.9\}$ and $\beta\in\{0.01,0.05,0.1,0.2,0.3,0.5\}$ chosen once by one-step-ahead error, forecasting 2 steps ahead with a 1.15 safety margin. C and D add drift-triggered adaptation to B and A respectively: when ADWIN fires on the load stream, D re-derives its provisioning anchor and C re-estimates its Holt parameters, both from the last 15 observations. C and D use the same ADWIN configuration ($\delta=0.002$, checked every step, grace period 5, minimum window 3). The default river setting checks only every 32 updates and never fires within a 60-step episode; with our setting ADWIN detects a 15$\rightarrow$90 step within 2--3 steps with no false alarms in 20 stationary runs. The static arms are not frozen: B keeps filtering new observations and only parameter re-estimation is withheld. As a sensitivity check, A and D were also run with an HPA-style proportional controller, $r' = \lceil r\cdot\rho/\rho^{*}\rceil$ with 10\% tolerance.
+
+\subsection{Part 2: Capacity Drift and Residual Recalibration}
+\textbf{Capacity drift.} The true capacity becomes $c\cdot m(t)$, with $m=1$ before drift and $m=0.55$ after. Offered load is constant at 40 users (jitter 2) so that capacity is the only change. Regimes: cap\_stationary (control); cap\_sudden ($m$ drops at $t=20$); cap\_gradual (linear drop from $t=15$ to $t=40$); cap\_recurring ($m$ alternates between 1 and 0.55 every 15 steps). No real KIS-S run contains a capacity change, so $m(t)$ is a synthetic scenario applied to the real-data-calibrated model.
+
+\textbf{Arms.} All arms observe the same load, latency and effective replicas. S: the $\pm1$ step rule on observed latency, which uses no capacity model after its initial anchor. RF and PF: the proportional controller and the Holt forecaster, each planning with a fixed capacity belief $\hat c=38.9$. RR and PR: the same controllers with recalibration. RO and PO: the same controllers given the true capacity at each step (an upper bound).
+
+\textbf{Recalibration (proposed).} At each step the controller computes the residual
+\begin{equation}
+e_t = \log L_t^{\mathrm{obs}} - \log \hat L_t(\hat c),
+\end{equation}
+the gap between observed and model-predicted latency under the believed capacity $\hat c$, and passes the standardised residual $e_t/\sigma$ to a detector, with $\sigma=0.507$ from calibration. When the detector fires, the estimated change point is the start of the post-change window, and $\hat c$ is re-fit by one-dimensional least squares on log-latency over a grid of 4 to 120 users in steps of 0.5, using observations since the change point (at least 4, at most 15). The estimate is refreshed each step until 15 post-change observations have accumulated.
+
+\textbf{Detectors.} We evaluated ADWIN at $\delta=0.002$ (the Part~1 setting), ADWIN at $\delta=0.2$, and a two-sided CUSUM \cite{page1954} with allowance $k=0.5$ and threshold $h=6$ in residual-standard-deviation units. The CUSUM threshold was tuned on no-drift noise only, giving a 4\% false-alarm rate per 60-step episode.
+
+\textbf{Detector-free ablation.} To test whether detection is needed, we also ran a variant that re-fits $\hat c$ at every step on a sliding window of the last 5, 15 or 30 observations, with no change point (\texttt{run\_continuous\_ablation.py}).
+
+\subsection{Experimental Protocol and Statistics}
+Every arm is run on 30 seeds per regime, 1{,}320 runs for Part~2 and the corresponding grid for Part~1. Thirty seeds were used instead of the five in the proposal because with $n=5$ paired observations an exact Wilcoxon signed-rank test cannot reach $p<0.05$ (minimum two-sided $p=0.0625$). Within a seed, all arms share the same load trace and latency-noise sequence (common random numbers), so comparisons are paired. We report the mean paired difference with a 95\% bootstrap confidence interval (2{,}000 resamples) and a Wilcoxon signed-rank $p$-value.
+
+\textbf{Metrics.} SLO violation rate (fraction of steps with P95 latency above 3000\,ms), also computed after drift onset; cost (replica-steps); longest violation run; replica churn; detection lag; false detections; and relative capacity-estimation error after onset.
+
+\subsection{Results Summary}
+Table~\ref{tab:cap} gives post-drift violation rates under capacity drift, with CUSUM for RR and PR.
+\begin{table}[h]
+\centering
+\caption{Post-drift SLO violation rate under capacity drift (mean of 30 seeds).}
+\label{tab:cap}
+\begin{tabular}{lccccccc}
+\toprule
+Regime & S & RF & RR & RO & PF & PR & PO \\
+\midrule
+Sudden    & 0.130 & 0.388 & 0.172 & 0.092 & 0.268 & 0.125 & 0.068 \\
+Gradual   & 0.104 & 0.281 & 0.167 & 0.081 & 0.187 & 0.099 & 0.039 \\
+Recurring & 0.122 & 0.274 & 0.179 & 0.096 & 0.191 & 0.118 & 0.066 \\
+\bottomrule
+\end{tabular}
+\end{table}
+Recalibration lowers violations relative to the fixed belief by 14.3, 8.5 and 7.1 points for the proportional controller and by 9.5, 6.6 and 5.5 points for the forecast controller (sudden, gradual, recurring; all $p<0.001$), at a cost of 62--119 additional replica-steps. Neither reaches the oracle (3.8 to 6.5 points behind). The model-free step rule S is statistically tied with PR on violations (differences of $-0.4$ to $-0.6$ points, confidence intervals include zero) and cheaper by 14--35 replica-steps. ADWIN at $\delta=0.002$ never fired on the residual; ADWIN at $\delta=0.2$ fired in 27--30\% of sudden and gradual episodes; CUSUM detected 97--100\% of drifts with median lag 8 (sudden), 25 (gradual) and 7 (recurring) steps. The detector-free ablation shows that detection is not what lowers violations: a 5-step sliding window beats CUSUM by 3.1, 3.3 and 2.7 points (PR) and 4.6, 5.8 and 4.2 points (RR) on sudden, gradual and recurring drift (all $p<0.01$), at 4 to 49 more replica-steps. With no drift it costs 14 to 28 more replica-steps than CUSUM, so the detector buys cost control, not lower violations. PR with a 5-step window beats the step rule S by 3.1 to 3.9 points at 38 to 56 more replica-steps; RR does not beat S. In Part~1, drift-triggered adaptation reduced violations of the $\pm1$ reactive rule (D$-$A of $-9.9$, $-3.1$ and $-5.8$ points for sudden, gradual and recurring) but D$-$A was $0$ against the proportional controller, and forecasting (B, C) kept lower violation rates than D.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{capacity_violation.png}
+\caption{Post-drift violation rate by arm under capacity drift (mean and 95\% CI over 30 seeds).}
+\end{figure}
+
+\subsection{Threats to Validity and Deviations from the Proposal}
+(i) The environment is a model calibrated on 114 real points, all at 3 replicas, so replica dependence is extrapolated. (ii) The capacity change and the load jitter are synthetic. (iii) The proposal named the Azure Functions 2019 trace as the base workload; Phase~2 uses the load shapes released with KIS-S instead, because they come with matching real latency measurements. (iv) The proposal specified Holt-Winters; with 60-step episodes and no seasonality in the regimes we use Holt's additive-trend method. (v) ADWIN is the detector for load drift but not for capacity drift, because it lacked power on the noisy residual; the CUSUM threshold uses a $\sigma$ taken from the calibration fit. (vi) Part~1 does not support hypotheses H1 and H2 on violation rate, and the step-rule gain depends on a slow fixed-step baseline. (viii) The CUSUM-triggered method is not the best variant; the detector-free re-fit is better on violations, and online demand estimation is established work (Grohmann et al.), so we claim only the comparison across drift types, relative to the eight papers reviewed. Window length, CUSUM parameters and the 0.55 drop were chosen by us and evaluated on the same seeds. (vii) The proportional controllers plan from the capacity model, so they are blind to capacity change by construction; a utilisation-measuring controller such as the real HPA would partly share the robustness of S.

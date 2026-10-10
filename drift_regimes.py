@@ -14,11 +14,12 @@ We add small Gaussian jitter (JITTER_SD users, seeded) so that ADWIN does
 not operate on perfectly constant signals and seeds affect the load too.
 This jitter is synthetic and stated as such.
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import numpy as np
 import pandas as pd
 
-from config import DATA_DIR, FIGURES_DIR
-
+DATA_DIR = os.path.join(BASE, "data")
 EPISODE_LEN = 60
 LOW_LOAD = 15.0
 HIGH_LOAD = 90.0
@@ -83,5 +84,5 @@ if __name__ == "__main__":
         ax.set_title(name); ax.set_xlabel("step"); ax.set_ylabel("offered load (users)")
         ax.legend(fontsize=7)
     plt.tight_layout()
-    plt.savefig(f"{FIGURES_DIR}/drift_regimes.png", dpi=130)
+    plt.savefig(os.path.join(BASE, "figures", "drift_regimes.png"), dpi=130)
     print("saved")

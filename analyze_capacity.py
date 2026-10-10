@@ -7,16 +7,18 @@ Contrasts (negative violation difference = first arm better):
   PR-RR        : proactive vs reactive, both recalibrated
 Each recalibrated arm is evaluated once per detector.
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import numpy as np, pandas as pd
 from scipy.stats import wilcoxon
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from config import RESULTS_DIR as RES, FIGURES_DIR as FIG
-
+RES = os.path.join(BASE, "results")
+FIG = os.path.join(BASE, "figures")
 rng = np.random.default_rng(0)
-DETS = ["adwin002", "adwin02", "cusum"]
+DETS = ["adwin002", "adwin02", "cusum"]   # filtered to detectors present in the results file
 REGS = ["cap_stationary", "cap_sudden", "cap_gradual", "cap_recurring"]
 
 
@@ -37,6 +39,8 @@ def summ(diff):
 
 def main():
     df = pd.read_csv(f"{RES}/capacity_results.csv")
+    global DETS
+    DETS = [d for d in DETS if d in set(df.detector)]
 
     # 1. per regime / arm summary (recalibrated arms split by detector)
     df["arm_label"] = np.where(df.detector.isin(["none"]), df.arm, df.arm + "[" + df.detector + "]")

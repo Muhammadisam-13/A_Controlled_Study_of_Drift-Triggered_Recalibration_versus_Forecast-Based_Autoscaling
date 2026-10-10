@@ -21,7 +21,6 @@ Fairness notes
 """
 import warnings
 import numpy as np
-from river import drift
 
 from dynamics import predict_latency
 
@@ -47,6 +46,14 @@ def make_adwin(delta=0.002):
     never fires. We check every step. Verified: detects a 15->90 step in
     ~2-3 steps with 0 false positives over 20 stationary runs.
     """
+    try:
+        from river import drift
+    except ImportError as e:   # e.g. compiled extension blocked by OS policy
+        raise ImportError(
+            "ADWIN needs river (pip install river==0.26.1). If river's compiled "
+            "extension is blocked on this machine (Windows Application Control), run "
+            "in WSL/Colab, or use only the CUSUM capacity study "
+            "(python run_capacity_experiment.py cusum-only).") from e
     return drift.ADWIN(delta=delta, clock=1, grace_period=5, min_window_length=3)
 
 

@@ -11,6 +11,8 @@ At step t:
   4. Cost accrues as replica-steps; SLO violation if latency > threshold.
   5. The controller observes (load, latency) and issues a new decision.
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import json
 import numpy as np
 
@@ -18,8 +20,8 @@ from dynamics import predict_latency
 from drift_regimes import build_regime, EPISODE_LEN, DRIFT_ONSET, REGIMES
 from controllers import (ReactiveController, ProactiveController,
                          STARTUP_DELAY_STEPS, SLO_THRESHOLD_MS)
-from config import DATA_DIR
 
+DATA_DIR = os.path.join(BASE, "data")
 CALIB_STEPS = 10   # first N steps of each trace used to calibrate/fit every arm
 
 

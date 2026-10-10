@@ -18,12 +18,11 @@ python analyze.py           # tables, paired contrasts, figures
 python capacity_drift.py            # smoke test, one seed
 python run_capacity_experiment.py   # 7 arms x 4 regimes x 30 seeds (~10 s)
 python analyze_capacity.py          # tables, paired contrasts, figures
+python run_continuous_ablation.py   # CUSUM-triggered vs detector-free sliding-window re-fit (~1 min)
 ```
-All paths are centralized in `config.py` and resolved relative to the repo
-itself, so no per-file edits are needed. The one machine-specific setting is
-where KISim was cloned: by default `config.py` looks for it as a sibling
-`../KISim` directory (matching the clone command above); override by setting
-the `KISIM_ROOT` environment variable instead if you cloned it elsewhere.
+Paths are relative to each script's folder, so it runs as-is on Windows/Linux/macOS. `extract_data.py` looks for KISim at `../KISim` (override with the `KISIM_DIR` environment variable); the extracted CSVs are already in `data/`, so that step is optional.
+
+**If river fails to import** (e.g. Windows 'Application Control policy has blocked' `_river_rust`): run in WSL or Google Colab, or run the capacity study without ADWIN: `python run_capacity_experiment.py cusum-only` then `python analyze_capacity.py`. Part 1 (`run_experiment.py`) needs ADWIN for arms C and D.
 
 ## What was reproduced from KIS-S, and what was not
 
@@ -156,3 +155,16 @@ All recalibration results below use CUSUM. ADWIN remains the detector in the loa
 4. **No-drift control:** PR-PF = +0.06pp (n.s.); 6.7% of episodes had one false CUSUM alarm.
 
 Outputs: `results/capacity_*.csv`, `figures/capacity_violation.png`, `figures/capacity_belief.png`.
+
+### Ablation: is the detector needed? (`run_continuous_ablation.py`)
+
+Re-fitting capacity every step on a sliding window (5/15/30 obs), no detector, versus the CUSUM-triggered re-fit.
+Outputs: `results/continuous_ablation.csv`, `results/continuous_ablation_contrasts.csv`.
+
+* Window 5 beats CUSUM on post-drift violations: PR -3.1/-3.3/-2.7pp, RR -4.6/-5.8/-4.2pp
+  (sudden/gradual/recurring, all p < 0.01), at +4 to +49 replica-steps.
+* With no drift, continuous re-fit costs +14 to +28 replica-steps vs CUSUM; window 5 adds +1.1pp violations for PR (p = 0.01).
+* PR[window 5] beats the step rule S by 3.1-3.9pp at +38 to +56 replica-steps; RR[window 5] does not beat S.
+* Conclusion: the useful ingredient is online capacity re-estimation; the detector saves cost, it does not lower violations.
+  Online resource-demand estimation is established (Grohmann et al.), so the contribution is the comparison across drift types
+  ("which kind of drift needs which kind of fix"), claimed only relative to the 8 papers reviewed.

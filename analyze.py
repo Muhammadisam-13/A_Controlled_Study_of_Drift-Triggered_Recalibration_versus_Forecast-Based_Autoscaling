@@ -11,6 +11,8 @@ trace and latency-noise sequence for a given (regime, seed):
   headline (RQ)                 : D - B , D - C   (recalibrated threshold vs forecast)
 Bootstrap 95% CI on the mean paired difference + Wilcoxon signed-rank p.
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import numpy as np
 import pandas as pd
 from scipy.stats import wilcoxon
@@ -18,8 +20,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from config import RESULTS_DIR as RES, FIGURES_DIR as FIG
-
+RES = os.path.join(BASE, "results")
+FIG = os.path.join(BASE, "figures")
 METRICS = ["cost", "slo_violation_rate"]
 rng = np.random.default_rng(0)
 

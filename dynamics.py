@@ -22,13 +22,14 @@ IMPORTANT ASSUMPTION: replicas were fixed at 3 in all real data, so the
 dependence on replica count (latency ~ load/replicas) is an extrapolation
 from queueing theory, not something observed. Stated as a limitation.
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import json
 import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
 
-from config import DATA_DIR
-
+DATA_DIR = os.path.join(BASE, "data")
 PATTERNS = ["ramp", "spike", "periodic", "random"]
 FIXED_REPLICAS_IN_REAL_DATA = 3
 BASE_FLOOR_MS = 200.0  # physical floor: lowest real p95 observed was ~220 ms

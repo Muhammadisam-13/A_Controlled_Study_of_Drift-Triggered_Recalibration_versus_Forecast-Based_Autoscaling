@@ -9,12 +9,15 @@ ground-truth traffic + latency-under-fixed-capacity signal to calibrate our
 own dynamics model, since KIS-S's released mock-mode RL environment has no
 action-outcome coupling (see project notes).
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import json
 import glob
 import os
 import pandas as pd
 
-from config import KISIM_RESULTS, DATA_DIR as OUT_DIR
+KISIM_RESULTS = os.path.join(os.environ.get("KISIM_DIR", os.path.join(BASE, "..", "KISim")), "results", "cpu_baseline", "dynamic")
+OUT_DIR = os.path.join(BASE, "data")
 
 PATTERNS = ["ramp", "spike", "periodic", "random"]
 

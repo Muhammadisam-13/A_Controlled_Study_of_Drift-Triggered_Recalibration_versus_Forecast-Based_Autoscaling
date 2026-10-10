@@ -9,14 +9,16 @@ Sensitivity : reactive arms {A,D} re-run with an HPA-style proportional
 N_SEEDS = 30 (proposal said 5): with n=5 paired seeds an exact Wilcoxon
 signed-rank test cannot reach p < 0.05 (min two-sided p = 0.0625).
 """
+import os
+BASE = os.path.dirname(os.path.abspath(__file__))
 import sys
 import pandas as pd
 from simulator import run_episode, load_dynamics_params
 from drift_regimes import REGIMES
-from config import RESULTS_DIR as OUT
 
 N_SEEDS = 30
 ARMS = ["A", "B", "C", "D"]
+OUT = os.path.join(BASE, "results")
 
 
 def main(n_seeds=N_SEEDS):
