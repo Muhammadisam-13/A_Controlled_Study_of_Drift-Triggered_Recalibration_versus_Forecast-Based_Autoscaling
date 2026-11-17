@@ -134,7 +134,8 @@ log-noise sd 0.507, so a 0.55-0.6 shift is only ~1.1 sd. A two-sided CUSUM
 per episode) detects 97-100% with median lag 7-8 (sudden/recurring), 25 (gradual).
 All recalibration results below use CUSUM. ADWIN remains the detector in the load-drift study.
 
-**Results (30 seeds, post-drift SLO violation rate; CUSUM for RR/PR)**
+**Results (30 seeds, post-drift SLO violation rate, i.e. steps after drift onset; CUSUM for RR/PR).**
+The contrasts below are on the post-drift rate (`capacity_post_contrasts.csv`); `capacity_contrasts.csv` holds the same contrasts on the whole-episode rate.
 
 | regime | S | RF | RR | RO | PF | PR | PO |
 |---|---|---|---|---|---|---|---|
@@ -142,13 +143,14 @@ All recalibration results below use CUSUM. ADWIN remains the detector in the loa
 | gradual | 0.104 | 0.281 | 0.167 | 0.081 | 0.187 | 0.099 | 0.039 |
 | recurring | 0.122 | 0.274 | 0.179 | 0.096 | 0.191 | 0.118 | 0.066 |
 
-1. **Recalibration works.** PR-PF = -9.5pp / -6.6pp / -5.5pp, RR-RF = -14.3 / -8.5 / -7.1pp
-   (sudden/gradual/recurring; all p < 0.001). It costs more replica-steps (+62 to +119).
-2. **It does not reach the oracle.** PR-PO = +3.8 / +4.4 / +3.9pp: detection lag and a noisy
+1. **Recalibration works.** Post-drift violation rate, PR-PF = -14.3pp / -8.8pp / -7.3pp, RR-RF = -21.5 / -11.3 / -9.5pp
+   (sudden/gradual/recurring; all p < 0.001; `results/capacity_post_contrasts.csv`). It costs more replica-steps (+62 to +119).
+   (Over the *whole episode*, i.e. including the pre-drift steps, the same contrasts are -9.5/-6.6/-5.5pp and -14.3/-8.5/-7.1pp; see `results/capacity_contrasts.csv`.)
+2. **It does not reach the oracle.** Post-drift PR-PO = +5.7 / +5.9 / +5.2pp (whole-episode: +3.8 / +4.4 / +3.9pp): detection lag and a noisy
    re-fit (belief ~23.5 vs true 21.4 in one example) leave a gap.
 3. **Honest caveat: the model-free step rule is competitive.** PR vs S: no significant
-   difference in violations (-0.4 to -0.6pp, CIs include 0) while PR costs +14 to +35
-   replica-steps more. RR is *worse* than S (+3.9 to +5.1pp). Recalibration fixes the model-based
+   difference in post-drift violations (-0.4 to -0.6pp, CIs include 0) while PR costs +14 to +35
+   replica-steps more. RR is *worse* than S (+4.2 / +6.3 / +5.7pp post-drift). Recalibration fixes the model-based
    controllers' blindness to capacity change, but a controller that reads latency directly
    (like real HPA reading utilisation) never had that blindness. So the claim is: recalibration
    rescues model-based autoscalers under capacity drift, not that it beats feedback control.
@@ -167,4 +169,4 @@ Outputs: `results/continuous_ablation.csv`, `results/continuous_ablation_contras
 * PR[window 5] beats the step rule S by 3.1-3.9pp at +38 to +56 replica-steps; RR[window 5] does not beat S.
 * Conclusion: the useful ingredient is online capacity re-estimation; the detector saves cost, it does not lower violations.
   Online resource-demand estimation is established (Grohmann et al.), so the contribution is the comparison across drift types
-  ("which kind of drift needs which kind of fix"), claimed only relative to the 8 papers reviewed.
+  ("which kind of drift needs which kind of fix"), claimed only relative to the studies reviewed in the paper.

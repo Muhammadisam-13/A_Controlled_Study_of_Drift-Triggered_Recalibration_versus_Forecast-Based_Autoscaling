@@ -69,6 +69,22 @@ def main():
     c = pd.DataFrame(rows).round(4)
     c.to_csv(f"{RES}/capacity_contrasts.csv", index=False)
 
+    # 2b. the same contrasts on the POST-DRIFT violation rate (the metric reported in the paper's
+    #     Part 2 table and text). Separate RNG so the bootstrap CIs in capacity_contrasts.csv are unchanged.
+    global rng
+    rng = np.random.default_rng(1)
+    prow = []
+    for regime in [r for r in REGS if r != "cap_stationary"]:
+        for name, a_, b_, det_dep in defs:
+            for det in (["cusum"] if det_dep else [None]):
+                diff = get(df, regime, a_, "post_drift_violation_rate", det) - get(df, regime, b_, "post_drift_violation_rate", det)
+                cdiff = get(df, regime, a_, "cost", det) - get(df, regime, b_, "cost", det)
+                mean, lo, hi, p = summ(diff)
+                prow.append({"regime": regime, "metric": "post_drift_violation_rate", "contrast": name,
+                             "detector": det or "-", "mean_diff": mean, "ci_lo": lo, "ci_hi": hi,
+                             "wilcoxon_p": p, "cost_diff": float(np.mean(cdiff))})
+    pd.DataFrame(prow).round(4).to_csv(f"{RES}/capacity_post_contrasts.csv", index=False)
+
     # 3. detector quality on the recalibrated arms
     det = (df[df.arm == "RR"].groupby(["regime", "detector"])
              .agg(detect_rate=("detection_lag", lambda x: x.notna().mean()), median_lag=("detection_lag", "median"),
